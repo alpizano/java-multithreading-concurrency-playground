@@ -41,6 +41,13 @@ public class MultiExecutor {
         TestThread thread3 = new TestThread();
         TestThread thread4 = new TestThread();
 
-        List<Runnable> input = new ArrayList<>(Arrays.asList(task1, task2, task3, task4));
+        List<Runnable> tasksList = new ArrayList<>(Arrays.asList(task1, task2, task3, task4));
+        List<Runnable> threadsList = new ArrayList<>(Arrays.asList(thread1, thread2, thread3, thread4));
+
+        MultiExecutor runnableExecutor = new MultiExecutor(tasksList);
+        MultiExecutor threadExecutor = new MultiExecutor(threadsList);
+
+        //runnableExecutor.executeAll();
+        threadExecutor.executeAll();
     }
 }
