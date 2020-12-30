@@ -1,6 +1,7 @@
 package org.example.sections.two;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -28,7 +29,18 @@ public class MultiExecutor {
 
         });
 
-        List<Runnable> input = new ArrayList<>();
-        input.add(new TestTask());
+        // Runnable Tasks
+        TestTask task1 = new TestTask();
+        TestTask task2 = new TestTask();
+        TestTask task3 = new TestTask();
+        TestTask task4 = new TestTask();
+
+        // Thread Tasks
+        TestThread thread1 = new TestThread();
+        TestThread thread2 = new TestThread();
+        TestThread thread3 = new TestThread();
+        TestThread thread4 = new TestThread();
+
+        List<Runnable> input = new ArrayList<>(Arrays.asList(task1, task2, task3, task4));
     }
 }
