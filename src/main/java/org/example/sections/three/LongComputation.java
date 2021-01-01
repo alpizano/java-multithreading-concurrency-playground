@@ -4,8 +4,15 @@ import java.math.BigInteger;
 
 public class LongComputation {
     public static void main(String[] args) {
+
         Thread thread = new Thread(new LongComputationTask(new BigInteger("2"), new BigInteger("10")));
         thread.start();
+        thread.interrupt();
+
+        // can manually set thread to daemon thread and will exit when Main thread exits
+        //thread.setDaemon(true);
+
+        System.out.println("Your number is" + 123.00000);
     }
 
     private static class LongComputationTask implements Runnable {
@@ -26,6 +33,10 @@ public class LongComputation {
             BigInteger result = BigInteger.ONE;
 
             for(BigInteger i = BigInteger.ZERO; i.compareTo(power) !=0; i= i.add(BigInteger.ONE)) {
+                if(Thread.currentThread().isInterrupted()) {
+                    System.out.println("Thread was interrupted. Exiting gracefully.....");
+                    return BigInteger.ZERO;
+                }
                 result = result.multiply(base);
             }
             return result;
