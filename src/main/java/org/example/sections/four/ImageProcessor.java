@@ -4,10 +4,19 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 
 public class ImageProcessor {
     public static final String SOURCE_FILE = "./resources/many-flowers.jpb";
     public static final String DESTINATION_FILE = "./many-flowers.jpg";
+
+    public static void recolorImage(BufferedImage originalImage, BufferedImage resultImage, int leftCorner, int topCorner, int width, int height) {
+        for(int x = leftCorner; x < leftCorner + width && x < originalImage.getWidth(); x++) {
+            for(int y = topCorner; y< topCorner + height && y < originalImage.getHeight(); y++) {
+                recolorPixel(originalImage, resultImage, x, y);
+            }
+        }
+    }
 
     /**
      *
@@ -40,6 +49,10 @@ public class ImageProcessor {
         }
 
         int newRGB = createRGBFromColors(newRed, newGreen, newBlue);
+    }
+
+    public static void setRGB(BufferedImage image, int x, int y, int rgb) {
+        image.getRaster().setDataElements(x, y, image.getColorModel().getDataElements(rgb, null));
     }
 
 
