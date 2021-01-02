@@ -23,12 +23,6 @@ public class MultiExecutor {
     }
 
     public static void main(String[] args) {
-        // thread creation using lambda
-        Thread t1 = new Thread(() -> {
-            // do some stuff here
-
-        });
-
         // Runnable Tasks
         TestTask task1 = new TestTask();
         TestTask task2 = new TestTask();
