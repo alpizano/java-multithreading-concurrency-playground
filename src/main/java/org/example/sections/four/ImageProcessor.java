@@ -7,8 +7,31 @@ import java.io.IOException;
 import java.nio.Buffer;
 
 public class ImageProcessor {
-    public static final String SOURCE_FILE = "./resources/many-flowers.jpb";
+
+    public static final String SOURCE_FILE = "./resources/many-flowers.jpg";
     public static final String DESTINATION_FILE = "./many-flowers.jpg";
+
+    public static void main(String[] args) throws IOException {
+        int seventeen = 0x11; // 0001 0001
+        int bitmask = 0xFF; // 1111 1111
+        int result = seventeen & bitmask;
+
+        System.out.println(result); // 17
+        System.out.println(result >> 4); // 0001 0001 (17) => (shift right 4) 0000 0001 (1)
+
+        // read original image into bufferedimage object
+        BufferedImage originalImage = ImageIO.read(new File(SOURCE_FILE));
+        // store output image
+        BufferedImage resultImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        recolorSingleThreaded(originalImage, resultImage);
+        File outputFile = new File(DESTINATION_FILE);
+        ImageIO.write(resultImage,"jpg", outputFile);
+    }
+
+    public static void recolorSingleThreaded(BufferedImage originalImage, BufferedImage resultImage) {
+        recolorImage(originalImage, resultImage, 0, 0, originalImage.getWidth(), originalImage.getHeight());
+    }
 
     public static void recolorImage(BufferedImage originalImage, BufferedImage resultImage, int leftCorner, int topCorner, int width, int height) {
         for(int x = leftCorner; x < leftCorner + width && x < originalImage.getWidth(); x++) {
@@ -113,18 +136,5 @@ public class ImageProcessor {
         return (rgb & 0x000000FF);
 
     }
-    public static void main(String[] args) throws IOException {
-        int seventeen = 0x11; // 0001 0001
-        int bitmask = 0xFF; // 1111 1111
-        int result = seventeen & bitmask;
 
-        System.out.println(result); // 17
-        System.out.println(result >> 4); // 0001 0001 (17) => (shift right 4) 0000 0001 (1)
-
-        // read original image into bufferedimage object
-        BufferedImage originalImage = ImageIO.read(new File(SOURCE_FILE));
-        // store output image
-        BufferedImage resultImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-
-    }
 }
