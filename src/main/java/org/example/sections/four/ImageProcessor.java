@@ -1,6 +1,8 @@
 package org.example.sections.four;
 
 public class ImageProcessor {
+    public static final String SOURCE_FILE = "./resources/many-flowers.jpb";
+    public static final String DESTINATION_FILE = "./many-flowers.jpg";
 
 
     /**
