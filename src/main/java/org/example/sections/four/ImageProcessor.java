@@ -16,15 +16,27 @@ public class ImageProcessor {
         int bitmask = 0xFF; // 1111 1111
         int result = seventeen & bitmask;
 
-        System.out.println(result); // 17
-        System.out.println(result >> 4); // 0001 0001 (17) => (shift right 4) 0000 0001 (1)
+        //System.out.println(result); // 17
+        //System.out.println(result >> 4); // 0001 0001 (17) => (shift right 4) 0000 0001 (1)
 
         // read original image into bufferedimage object
         BufferedImage originalImage = ImageIO.read(new File(SOURCE_FILE));
+
+        // original dimensions of image are 3036 x 4048
+        System.out.println(originalImage.getWidth());
+        System.out.println(originalImage.getHeight());
+
         // store output image
         BufferedImage resultImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
 
+        long startTime = System.currentTimeMillis();
+
         recolorSingleThreaded(originalImage, resultImage);
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println(String.format("%d milliseconds", endTime - startTime));
+
         File outputFile = new File(DESTINATION_FILE);
         ImageIO.write(resultImage,"jpg", outputFile);
     }
