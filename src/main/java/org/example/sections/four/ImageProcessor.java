@@ -2,6 +2,19 @@ package org.example.sections.four;
 
 public class ImageProcessor {
 
+
+    /**
+     *
+     * @param red value from 0 to 255
+     * @param green value from 0 to 255
+     * @param blue value from 0 to 255
+     * @return checks if pixel is shade of gray
+     */
+    public static boolean isShadeOfGray(int red, int green, int blue) {
+        // arbitrary distance is 30
+        return Math.abs(red - green) < 30 && Math.abs(red - blue) < 30 && Math.abs(green - blue) < 30;
+    }
+
     /**
      *
      * @param red value from 0 to 255
