@@ -1,8 +1,46 @@
 package org.example.sections.four;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class ImageProcessor {
     public static final String SOURCE_FILE = "./resources/many-flowers.jpb";
     public static final String DESTINATION_FILE = "./many-flowers.jpg";
+
+    /**
+     *
+     * @param originalImage
+     * @param resultImage
+     * @param x
+     * @param y
+     */
+    public static void recolorPixel(BufferedImage originalImage, BufferedImage resultImage, int x, int y) {
+        int rgb = originalImage.getRGB(x, y);
+
+        int red = getRed(rgb);
+        int green = getGreen(rgb);
+        int blue = getBlue(rgb);
+
+        int newRed, newGreen, newBlue;
+
+        // make purple
+        if(isShadeOfGray(red, green, blue)) {
+            // increase red value
+            newRed = Math.min(255, red + 10);
+            newGreen = Math.max(0, green -80);
+            newBlue = Math.max(0, blue -20);
+        }
+        else {
+            // if pixel != gray, leave alone
+            newRed = red;
+            newGreen = green;
+            newBlue = blue;
+        }
+
+        int newRGB = createRGBFromColors(newRed, newGreen, newBlue);
+    }
 
 
     /**
@@ -62,13 +100,18 @@ public class ImageProcessor {
         return (rgb & 0x000000FF);
 
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int seventeen = 0x11; // 0001 0001
         int bitmask = 0xFF; // 1111 1111
         int result = seventeen & bitmask;
 
         System.out.println(result); // 17
         System.out.println(result >> 4); // 0001 0001 (17) => (shift right 4) 0000 0001 (1)
+
+        // read original image into bufferedimage object
+        BufferedImage originalImage = ImageIO.read(new File(SOURCE_FILE));
+        // store output image
+        BufferedImage resultImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
 
     }
 }
