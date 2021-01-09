@@ -5,8 +5,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.Buffer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
-public class ImageProcessor {
+public class MultiThreadedImageProcessor {
 
     public static final String SOURCE_FILE = "./resources/many-flowers.jpg";
     public static final String DESTINATION_FILE = "./many-flowers.jpg";
@@ -32,6 +35,7 @@ public class ImageProcessor {
         long startTime = System.currentTimeMillis();
 
         recolorSingleThreaded(originalImage, resultImage);
+        //recolorMultiThreaded(originalImage, resultImage, 4);
 
         long endTime = System.currentTimeMillis();
 
@@ -40,6 +44,36 @@ public class ImageProcessor {
         File outputFile = new File(DESTINATION_FILE);
         ImageIO.write(resultImage,"jpg", outputFile);
     }
+
+    public static void recolorMultiThreaded(BufferedImage originalImage, BufferedImage resultImage, int numberOfThreads)  {
+        List<Thread> threads = new ArrayList<>();
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight() / numberOfThreads;
+
+        // loop through # of threads
+        IntStream.range(0,numberOfThreads).forEach( i -> {
+            //int threadMultiplier = i;
+
+            // add thread, override run()
+            Thread thread = new Thread(() -> {
+                int topCorner = height * i;
+                recolorImage(originalImage, resultImage,0,topCorner,width,height);
+            });
+
+            threads.add(thread);
+        });
+
+        threads.forEach(Thread::start);
+        threads.forEach(i -> {
+            try {
+                i.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+    }
+
 
     public static void recolorSingleThreaded(BufferedImage originalImage, BufferedImage resultImage) {
         recolorImage(originalImage, resultImage, 0, 0, originalImage.getWidth(), originalImage.getHeight());
