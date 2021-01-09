@@ -1,4 +1,4 @@
-package org.example.sections.four;
+package org.example.sections.four.imageprocessor;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -34,8 +34,8 @@ public class MultiThreadedImageProcessor {
 
         long startTime = System.currentTimeMillis();
 
-        recolorSingleThreaded(originalImage, resultImage);
-        //recolorMultiThreaded(originalImage, resultImage, 4);
+        //recolorSingleThreaded(originalImage, resultImage);
+        recolorMultiThreaded(originalImage, resultImage, 8);
 
         long endTime = System.currentTimeMillis();
 

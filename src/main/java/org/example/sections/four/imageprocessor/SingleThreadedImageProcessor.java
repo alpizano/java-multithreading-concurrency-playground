@@ -1,4 +1,4 @@
-package org.example.sections.four;
+package org.example.sections.four.imageprocessor;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.Buffer;
 
-public class ImageProcessor {
+public class SingleThreadedImageProcessor {
 
     public static final String SOURCE_FILE = "./resources/many-flowers.jpg";
     public static final String DESTINATION_FILE = "./many-flowers.jpg";
