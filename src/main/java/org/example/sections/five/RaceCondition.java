@@ -14,7 +14,6 @@ public class RaceCondition {
 
         decrementingThread.start();
 
-
         incrementingThread.join();
         decrementingThread.join();
 
@@ -57,6 +56,7 @@ public class RaceCondition {
         private int items = 0;
 
         final Object lock = new Object();
+        //Object lock = new Object();
 
         //public synchronized void increment() {
         public void increment() {
