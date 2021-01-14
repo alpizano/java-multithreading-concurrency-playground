@@ -18,6 +18,7 @@ public class RaceCondition {
         incrementingThread.join();
         decrementingThread.join();
 
+
         System.out.println(inventoryCounter.getItems());
 
     }
@@ -55,12 +56,20 @@ public class RaceCondition {
     private static class InventoryCounter {
         private int items = 0;
 
+        final Object lock = new Object();
+
+        //public synchronized void increment() {
         public void increment() {
-            items++;
+            synchronized (lock) {
+                items++;
+            }
         }
 
+        //public synchronized void decrement() {
         public void decrement() {
-            items--;
+            synchronized (lock) {
+                items--;
+            }
         }
 
         public int getItems() {
