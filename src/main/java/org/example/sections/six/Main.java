@@ -11,13 +11,17 @@ public class Main {
         BusinessLogic businessLogicThread1 = new BusinessLogic(metrics);
         BusinessLogic businessLogicThread2  = new BusinessLogic(metrics);
 
-        MetricsPrinter metricsPrinter = new MetricsPrinter(metrics);
+        Main main = new Main();
+
+        MetricsPrinter metricsPrinter = main.new MetricsPrinter(metrics);
         businessLogicThread1.start();
         businessLogicThread2.start();
         metricsPrinter.start();
     }
 
-    public static class MetricsPrinter extends Thread {
+    // without static modifier
+    public class MetricsPrinter extends Thread {
+    //public static class MetricsPrinter extends Thread {
         private Metrics metrics;
 
         public MetricsPrinter(Metrics metrics) {
