@@ -7,19 +7,19 @@ public class DataRace {
         SharedClass sharedClass = new SharedClass();
 
         // no data race when using java 8 streams?
-        new Thread(() -> {
-            IntStream.range(0,Integer.MAX_VALUE).forEach( i -> {
-                System.out.println("thread1: " + i);
-                sharedClass.increment();
-            });
-        }).start();
-
-        new Thread(() -> {
-            IntStream.range(0,Integer.MAX_VALUE).forEach( i -> {
-                System.out.println("thread2: " + i);
-                sharedClass.checkForDataRace();
-            });
-        }).start();
+//        new Thread(() -> {
+//            IntStream.range(0,Integer.MAX_VALUE).forEach( i -> {
+//                System.out.println("thread1: " + i);
+//                sharedClass.increment();
+//            });
+//        }).start();
+//
+//        new Thread(() -> {
+//            IntStream.range(0,Integer.MAX_VALUE).forEach( i -> {
+//                System.out.println("thread2: " + i);
+//                sharedClass.checkForDataRace();
+//            });
+//        }).start();
 
         new Thread(() -> {
             for(int i=0; i<Integer.MAX_VALUE; i++) {
@@ -35,8 +35,9 @@ public class DataRace {
     }
 
     private static class SharedClass {
-        private int x = 0;
-        private int y = 0;
+        // use volatile to overcome data races
+        private volatile int x = 0;
+        private volatile int y = 0;
 
         public void increment() {
             x++;
