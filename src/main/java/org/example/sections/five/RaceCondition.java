@@ -5,8 +5,10 @@ import java.util.stream.IntStream;
 public class RaceCondition {
     public static void main(String[] args) throws InterruptedException {
         InventoryCounter inventoryCounter = new InventoryCounter();
+        InventoryCounter inventoryCounter2 = new InventoryCounter();
         DecrementingThread decrementingThread = new DecrementingThread(inventoryCounter);
         IncrementingThread incrementingThread = new IncrementingThread(inventoryCounter);
+        //IncrementingThread incrementingThread = new IncrementingThread(inventoryCounter2);
 
         // race condition when both run at same time for i++ and i-- non ATOMIC operations
         incrementingThread.start();
@@ -19,6 +21,7 @@ public class RaceCondition {
 
 
         System.out.println(inventoryCounter.getItems());
+       // System.out.println(inventoryCounter2.getItems());
 
     }
 
