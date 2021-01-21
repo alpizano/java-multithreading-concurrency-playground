@@ -26,11 +26,23 @@ public class Main {
         }
 
         public void addItem(int price) {
-
+            Integer numberOfItemsForPrice = priceToCountMap.get(price);
+            if(numberOfItemsForPrice == null) {
+                priceToCountMap.put(price,1);
+            }
+            else {
+                priceToCountMap.put(price,numberOfItemsForPrice+1);
+            }
         }
 
         public void removeItem(int price) {
-
+            Integer numberOfItemsForPrice = priceToCountMap.get(price);
+            if(numberOfItemsForPrice == null || numberOfItemsForPrice == 1) {
+                priceToCountMap.remove(price);
+            }
+            else {
+                priceToCountMap.put(price,numberOfItemsForPrice-1);
+            }
         }
     }
 }
